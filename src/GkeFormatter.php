@@ -36,7 +36,6 @@ class GkeFormatter extends JsonFormatter
                         'referer' => $request->getHeader('Referer'),
                         'userAgent' => $request->getHeader('User-Agent'),
                         'remoteIp' => $request->getHeader('X-Forwarded-For'),
-                        'serverIp' => $_SERVER['SERVER_ADDR'],
                     ],
                 ]
             )
