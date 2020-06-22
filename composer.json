@@ -1,0 +1,15 @@
+{
+    "name": "macpaw/monolog-gke-formatter",
+    "description": "Monolog JSON Formatter for Google StackDriver integration",
+    "type": "library",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Andrii Nasinnyk",
+            "email": "anasinnyk@macpaw.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^2.1"
+    }
+}
