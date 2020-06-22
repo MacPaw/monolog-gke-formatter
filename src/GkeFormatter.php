@@ -24,7 +24,7 @@ class GkeFormatter extends JsonFormatter
                     'thread' => $record['channel'],
                     'severity' => $record['level_name'],
                     'serviceContext' => $record['context'],
-                    'timestamp' => $record['datatime']->getTimestamp(),
+                    'timestamp' => $record['datetime']->getTimestamp(),
                 ]
             )
         );
