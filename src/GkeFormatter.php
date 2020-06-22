@@ -11,11 +11,11 @@ class GkeFormatter extends JsonFormatter
         return parent::format(
             array_merge(
                 $record['extra'],
-                isset($record['file'])
+                isset($record['exception'])
                     ? [
                         'sourceLocation' => [
-                            'file' => str_split(':', $record['file'])[0],
-                            'line' => str_split(':', $record['file'])[1]
+                            'file' => str_split(':', $record['exception']['file'])[0],
+                            'line' => str_split(':', $record['exception']['file'])[1]
                         ]
                     ]
                     : [],
