@@ -11,5 +11,8 @@
     ],
     "require": {
         "monolog/monolog": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {"MacPaw\\MonologGkeFormatter\\": "src"}
     }
 }

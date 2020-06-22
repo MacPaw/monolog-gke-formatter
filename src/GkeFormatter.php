@@ -1,6 +1,5 @@
 <?php
 
-
 namespace MacPaw\MonologGkeFormatter;
 
 use Monolog\Formatter\JsonFormatter;
