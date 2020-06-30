@@ -37,7 +37,6 @@ class GkeFormatter extends JsonFormatter
                         'requestUrl' => $request->getUri()->__toString(),
                         'requestSize' => $request->getBody()->getSize(),
                         'protocol' => $request->getProtocolVersion(),
-                        'latency' => (string)round((microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']) * 1000),
                         'referer' => $request->getHeaderLine('Referer'),
                         'userAgent' => $request->getHeaderLine('User-Agent'),
                         'remoteIp' => $request->getHeaderLine('X-Forwarded-For'),
