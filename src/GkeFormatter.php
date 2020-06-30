@@ -10,21 +10,21 @@ class GkeFormatter extends JsonFormatter
     public function format(array $record): string
     {
         $request = ServerRequest::fromGlobals();
-        $debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,5);
+        $debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,6);
 
         return parent::format(
             array_merge(
                 $record['extra'],
-                isset($debug[3])
+                isset($debug[4])
                     ? [
                     'sourceLocation' => [
-                        'file' => $debug[3]['file'],
-                        'line' => $debug[3]['line'],
-                        'function' => isset($debug[4]) && isset($debug[4]['class']) && isset($debug[4]['function'])
-                            ? sprintf("%s:%s", $debug[4]['class'], $debug[4]['function'])
+                        'file' => $debug[4]['file'],
+                        'line' => $debug[4]['line'],
+                        'function' => isset($debug[5]) && isset($debug[5]['class']) && isset($debug[5]['function'])
+                            ? $debug[5]['class'] . $debug[5]['type'] . $debug[5]['function']
                             : (
-                            isset($debug[4]) && isset($debug[4]['function'])
-                                ? $debug[4]['function']
+                            isset($debug[5]) && isset($debug[5]['function'])
+                                ? $debug[5]['function']
                                 : ''
                             ),
                     ]
