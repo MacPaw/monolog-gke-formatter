@@ -1,7 +1,18 @@
 {
     "name": "macpaw/monolog-gke-formatter",
     "description": "Monolog JSON Formatter for Google StackDriver integration",
+    "homepage": "https://github.com/MacPaw/monolog-gke-formatter",
     "type": "library",
+    "keywords": [
+        "Google",
+        "Stackdriver",
+        "Tracing",
+        "Logging",
+        "Error Reporting",
+        "Formator Error",
+        "log",
+        "logging"
+    ],
     "license": "OSL-3.0",
     "authors": [
         {
