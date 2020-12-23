@@ -7,7 +7,7 @@ use Monolog\Formatter\JsonFormatter;
 
 class GkeFormatter extends JsonFormatter
 {
-    const BACKTRACE_DEFAULT_CALL = 6;
+    protected const BACKTRACE_DEFAULT_CALL = 6;
 
     protected $deepToBacktrace;
     protected $httpRequestContext;
@@ -30,27 +30,21 @@ class GkeFormatter extends JsonFormatter
     public function format(array $record): string
     {
         $request = ServerRequest::fromGlobals();
-        $debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,$this->deepToBacktrace);
+        $debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $this->deepToBacktrace);
 
         return parent::format(
             array_merge(
                 $record['extra'],
-                $this->sourceLocationContext && isset($debug[$this->deepToBacktrace-2])
+                $this->sourceLocationContext && isset($debug[$this->deepToBacktrace - 2])
                     ? [
                         'sourceLocation' => [
-                            'file' => $debug[$this->deepToBacktrace-2]['file'],
-                            'line' => $debug[$this->deepToBacktrace-2]['line'],
-                            'function' => isset($debug[$this->deepToBacktrace-1]) && isset($debug[$this->deepToBacktrace-1]['class']) && isset($debug[$this->deepToBacktrace-1]['function'])
-                                ? $debug[$this->deepToBacktrace-1]['class'] . $debug[$this->deepToBacktrace-1]['type'] . $debug[$this->deepToBacktrace-1]['function']
-                                : (
-                                isset($debug[$this->deepToBacktrace-1]) && isset($debug[$this->deepToBacktrace-1]['function'])
-                                    ? $debug[$this->deepToBacktrace-1]['function']
-                                    : ''
-                                ),
+                            'file' => $debug[$this->deepToBacktrace - 2]['file'],
+                            'line' => $debug[$this->deepToBacktrace - 2]['line'],
+                            'function' => $this->getFunction($debug),
                         ]
                     ]
                     : [],
-                $this->httpRequestContext && preg_match('/cgi/', php_sapi_name())
+                $this->httpRequestContext && false !== strpos(PHP_SAPI, "cgi")
                     ? [
                         'httpRequest' => [
                             'requestMethod' => $request->getMethod(),
@@ -72,5 +66,14 @@ class GkeFormatter extends JsonFormatter
                 ]
             )
         );
+    }
+
+    private function getFunction(array $debug): string
+    {
+        $cursor = $debug[$this->deepToBacktrace - 1];
+
+        return isset($cursor['class'], $cursor['function'])
+            ? $cursor['class'] . $cursor['type'] . $cursor['function']
+            : $cursor['function'] ?? '';
     }
 }
