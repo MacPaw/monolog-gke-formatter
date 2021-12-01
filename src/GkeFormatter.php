@@ -26,7 +26,7 @@ class GkeFormatter extends JsonFormatter
         $this->sourceLocationContext = $sourceLocationContext;
         $this->deepToBacktrace = $deepToBacktrace;
     }
-    
+
     /**
      * @param mixed[] $record
      *
@@ -61,7 +61,7 @@ class GkeFormatter extends JsonFormatter
             )
         );
     }
-    
+
     /**
      * @return mixed[]
      */
@@ -81,7 +81,7 @@ class GkeFormatter extends JsonFormatter
             ],
         ];
     }
-    
+
     /**
      * @param mixed[] $debug
      *
