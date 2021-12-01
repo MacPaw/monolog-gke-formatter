@@ -35,6 +35,7 @@
     "scripts": {
         "composer-validate": "composer validate",
         "check-style": "vendor/bin/phpcs",
-        "fix-style": "vendor/bin/phpcbf"
+        "fix-style": "vendor/bin/phpcbf",
+        "phpstan": "vendor/bin/phpstan analyse"
     }
 }
