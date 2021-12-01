@@ -29,7 +29,6 @@ class GkeFormatter extends JsonFormatter
 
     public function format(array $record): string
     {
-        $request = ServerRequest::fromGlobals();
         $debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $this->deepToBacktrace);
 
         return parent::format(
@@ -44,18 +43,8 @@ class GkeFormatter extends JsonFormatter
                         ]
                     ]
                     : [],
-                $this->httpRequestContext && false !== strpos(PHP_SAPI, "cgi")
-                    ? [
-                        'httpRequest' => [
-                            'requestMethod' => $request->getMethod(),
-                            'requestUrl' => $request->getUri()->__toString(),
-                            'requestSize' => $request->getBody()->getSize(),
-                            'protocol' => $request->getProtocolVersion(),
-                            'referer' => $request->getHeaderLine('Referer'),
-                            'userAgent' => $request->getHeaderLine('User-Agent'),
-                            'remoteIp' => $request->getHeaderLine('X-Forwarded-For'),
-                        ],
-                    ]
+                $this->httpRequestContext && false !== strpos(php_sapi_name(), "cgi")
+                    ? $this->createRequestContext()
                     : [],
                 [
                     'message' => $record['message'],
@@ -66,6 +55,23 @@ class GkeFormatter extends JsonFormatter
                 ]
             )
         );
+    }
+
+    private function createRequestContext(): array
+    {
+        $request = ServerRequest::fromGlobals();
+
+        return [
+            'httpRequest' => [
+                'requestMethod' => $request->getMethod(),
+                'requestUrl' => $request->getUri()->__toString(),
+                'requestSize' => $request->getBody()->getSize(),
+                'protocol' => $request->getProtocolVersion(),
+                'referer' => $request->getHeaderLine('Referer'),
+                'userAgent' => $request->getHeaderLine('User-Agent'),
+                'remoteIp' => $request->getHeaderLine('X-Forwarded-For'),
+            ],
+        ];
     }
 
     private function getFunction(array $debug): string
