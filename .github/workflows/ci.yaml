@@ -1,0 +1,48 @@
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches: [ master, develop ]
+
+jobs:
+    run:
+        runs-on: ubuntu-18.04
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - '7.2'
+                    - '7.3'
+                    - '7.4'
+                    - '8.0'
+                    - '8.1'
+
+        name: PHP ${{ matrix.php }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - uses: actions/cache@v2
+              with:
+                  path: ~/.composer/cache/files
+                  key: ${{ matrix.php }}
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+
+            - name: Set composer cache directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            - name: Cache composer
+              uses: actions/cache@v2.1.2
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+                  restore-keys: ${{ runner.os }}-${{ matrix.php }}-composer
+
+            - name: Install dependencies
+              run: composer install

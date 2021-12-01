@@ -43,7 +43,7 @@ class GkeFormatter extends JsonFormatter
                         ]
                     ]
                     : [],
-                $this->httpRequestContext && false !== strpos(php_sapi_name(), "cgi")
+                $this->httpRequestContext && false !== strpos(PHP_SAPI, "cgi")
                     ? $this->createRequestContext()
                     : [],
                 [
