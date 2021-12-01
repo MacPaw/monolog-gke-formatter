@@ -26,7 +26,12 @@ class GkeFormatter extends JsonFormatter
         $this->sourceLocationContext = $sourceLocationContext;
         $this->deepToBacktrace = $deepToBacktrace;
     }
-
+    
+    /**
+     * @param mixed[] $record
+     *
+     * @return string
+     */
     public function format(array $record): string
     {
         $debug = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $this->deepToBacktrace);
@@ -56,7 +61,10 @@ class GkeFormatter extends JsonFormatter
             )
         );
     }
-
+    
+    /**
+     * @return mixed[]
+     */
     private function createRequestContext(): array
     {
         $request = ServerRequest::fromGlobals();
@@ -73,7 +81,12 @@ class GkeFormatter extends JsonFormatter
             ],
         ];
     }
-
+    
+    /**
+     * @param mixed[] $debug
+     *
+     * @return string
+     */
     private function getFunction(array $debug): string
     {
         $cursor = $debug[$this->deepToBacktrace - 1];

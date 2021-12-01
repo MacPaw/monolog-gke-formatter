@@ -21,3 +21,21 @@ jobs:
 
             - name: Run script
               run: composer check-style
+
+    phpstan:
+        name: PHPStan
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  key: '7.2'
+
+            - name: Install dependencies
+              run: composer install --no-progress --no-interaction --prefer-dist
+
+            - name: Run script
+              run: vendor/bin/phpstan analyse
