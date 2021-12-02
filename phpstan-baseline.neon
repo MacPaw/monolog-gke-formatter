@@ -1,0 +1,14 @@
+parameters:
+	ignoreErrors:
+	    -
+	        message: '#Property MacPaw\\MonologGkeFormatter\\GkeFormatter::\$deepToBacktrace has no type specified.#'
+	        count: 1
+	        path: ./src
+	    -
+	        message: '#Property MacPaw\\MonologGkeFormatter\\GkeFormatter::\$httpRequestContext has no type specified.#'
+	        count: 1
+	        path: ./src
+	    -
+	        message: '#Property MacPaw\\MonologGkeFormatter\\GkeFormatter::\$sourceLocationContext has no type specified.#'
+	        count: 1
+	        path: ./src
