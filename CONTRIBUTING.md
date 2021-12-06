@@ -1,4 +1,4 @@
-# Contribute to Symfony Health Check Bundle
+# Contribute to Monolog Gke Formatter
 
 Thank you for contributing!
 
