@@ -48,4 +48,4 @@ jobs:
                   restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.composer }}-composer
 
             - name: Install dependencies
-              run: composer install ${{ matrix.composer }}
+              run: composer update ${{ matrix.composer }}
