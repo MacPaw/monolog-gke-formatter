@@ -17,8 +17,11 @@ jobs:
                     - '7.4'
                     - '8.0'
                     - '8.1'
+                composer:
+                    - ''
+                    - '--prefer-lowest'
 
-        name: PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }} ${{ matrix.composer }}
         steps:
             - name: Checkout
               uses: actions/checkout@v2
@@ -41,8 +44,8 @@ jobs:
               uses: actions/cache@v2.1.2
               with:
                   path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
-                  restore-keys: ${{ runner.os }}-${{ matrix.php }}-composer
+                  key: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.composer }}-composer-${{ hashFiles('composer.json') }}
+                  restore-keys: ${{ runner.os }}-${{ matrix.php }}-${{ matrix.composer }}-composer
 
             - name: Install dependencies
-              run: composer install
+              run: composer install ${{ matrix.composer }}
